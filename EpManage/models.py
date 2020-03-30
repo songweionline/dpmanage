@@ -68,36 +68,41 @@ class MyUserManage(BaseUserManager):
 
 class MyUser(AbstractBaseUser):
     '''不含权限以及分组管理'''
-    user_id = models.SmallIntegerField(verbose_name='员工编号', unique=True)
+    user_id = models.CharField(max_length=16, verbose_name='员工编号', unique=True)
     username = models.CharField(verbose_name='姓名', max_length=64, unique=True)
     section = models.ForeignKey('Section', verbose_name='所属科室', null=True, on_delete=models.SET_NULL)
     department = models.ForeignKey('Department', verbose_name='所属部门', null=True, on_delete=models.SET_NULL)
     plat = models.ForeignKey('Plat', verbose_name='所属平台', null=True, on_delete=models.SET_NULL)
-    phone = models.CharField(max_length=64, verbose_name='电话')
+    phone = models.CharField(max_length=32, verbose_name='电话')
+    mobile_phone = models.CharField(max_length=32, verbose_name='手机')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
 
     objects = MyUserManage()
 
     USERNAME_FIELD = 'user_id'
-    REQUIRED_FIELDS = 'username'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return '%s %s %s' % (self.user_id, self.username, self.department)
+
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
 
     class Meta:
         verbose_name = '员工总表'
         verbose_name_plural = '员工总表'
 
-    ''' def has_perm(self, perm, obj=None):
-           pass
-
-       def has_moudle_perm(self, app_label):
-           pass
-
-       @property
-       def is_staff(self):
-           pass
-           权限验证'''
 
