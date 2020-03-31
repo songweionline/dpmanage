@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'PjManage',
     'ConManage',
-    'EpManage',
+
 ]
 
 MIDDLEWARE = [
@@ -128,4 +128,3 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'EpManage.MyUser'
