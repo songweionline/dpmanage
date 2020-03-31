@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'pj_manage',
     'con_manage',
     'user_app',
-
 ]
 
 MIDDLEWARE = [
@@ -129,3 +128,4 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'user_app.MyUser'
