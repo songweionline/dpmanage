@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ContratcManageConfig(AppConfig):
-    name = 'ConManage'
+    name = 'con_manage'
