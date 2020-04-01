@@ -31,6 +31,7 @@ class Project(models.Model):  #共有属性
     department = models.ForeignKey('user_app.Department', verbose_name="所属部门", on_delete=models.DO_NOTHING)
     budget = models.FloatField(verbose_name='项目预算')
     price = models.FloatField(verbose_name='项目总价')
+    pj_plat = models.ForeignKey('user_app.Plat', verbose_name='所属平台', default=1, on_delete=models.DO_NOTHING)
     pj_user = models.ForeignKey('user_app.MyUser', verbose_name="使用人", on_delete=models.DO_NOTHING,
                                 related_name='pj_user')
     charge_user = models.ForeignKey('user_app.MyUser', verbose_name="责任人", on_delete=models.DO_NOTHING,

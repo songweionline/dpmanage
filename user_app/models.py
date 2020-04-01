@@ -69,7 +69,7 @@ class MyUserManage(BaseUserManager):
 class MyUser(AbstractBaseUser):
     '''不含权限以及分组管理'''
     user_id = models.CharField(max_length=16, verbose_name='员工编号', unique=True)
-    username = models.CharField(verbose_name='姓名', max_length=64, unique=True)
+    username = models.CharField(verbose_name='姓名', max_length=64)
     section = models.ForeignKey('Section', verbose_name='所属科室', null=True, on_delete=models.SET_NULL)
     department = models.ForeignKey('Department', verbose_name='所属部门', null=True, on_delete=models.SET_NULL)
     plat = models.ForeignKey('Plat', verbose_name='所属平台', null=True, on_delete=models.SET_NULL)

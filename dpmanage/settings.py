@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'pj_manage',
     'con_manage',
     'user_app',
+    'asset_app'
 ]
 
 MIDDLEWARE = [

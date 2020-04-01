@@ -28,17 +28,19 @@ class Asset(models.Model):  #资产共有属性
     sn = models.CharField(max_length=128, verbose_name='资产序列号')
     asset_id = models.IntegerField(verbose_name='资产编号')
     department = models.ForeignKey('user_app.Department', verbose_name='所属部门', null=True, on_delete=models.SET_NULL)
-    asset_user = models.ForeignKey('user_app.MyUser', verbose_name="使用人", on_delete=models.DO_NOTHING)
-    asset_charge_user = models.ForeignKey('user_app.MyUser', verbose_name="责任人", on_delete=models.DO_NOTHING)
-    asset_operator = models.ForeignKey('user_app.MyUser', verbose_name='经办人', on_delete=models.DO_NOTHING)
+    asset_user = models.ForeignKey('user_app.MyUser', verbose_name="使用人", on_delete=models.DO_NOTHING,
+                                   related_name='asset_user')
+    asset_charge_user = models.ForeignKey('user_app.MyUser', verbose_name="责任人", on_delete=models.DO_NOTHING,
+                                          related_name='asset_charge_user')
+    asset_operator = models.ForeignKey('user_app.MyUser', verbose_name='经办人', on_delete=models.DO_NOTHING,
+                                       related_name='asset_operator')
     price = models.FloatField(null=True, verbose_name='价格')
     purchase_day = models.DateField(verbose_name='购买日期')
     expire_day = models.DateField(verbose_name='过保日期')
     memo = models.TextField(verbose_name='备注')
 
     def __str__(self):
-        return '<%s>--%s--%s--%s--%s--%s' % (self.get_asset_type_display(), self.name, self.department, self.user,
-                                             self.charge_user, self.price)
+        return '%s--%s--%s--%s' % (self.get_asset_type_display(), self.name, self.department, self.price)
 
     class Meta:
         verbose_name = '资产总表'
@@ -55,11 +57,12 @@ class Consumables(models.Model):   #耗材
         (3, "视音频耗材"),
         (4, "其他耗材"),
     )
-    project = models.ForeignKey('Project', on_delete=models.DO_NOTHING)
+    project = models.ForeignKey('pj_manage.Project', on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=64, verbose_name='耗材名称')
-    user = models.ForeignKey('user_app.MyUser', verbose_name="使用人", on_delete=models.DO_NOTHING)
-    charge_user = models.ForeignKey('user_app.MyUser', verbose_name="责任人", on_delete=models.DO_NOTHING)
-    operator = models.ForeignKey('user_app.MyUser', verbose_name='经办人', on_delete=models.DO_NOTHING)
+    charge_user = models.ForeignKey('user_app.MyUser', verbose_name="责任人", on_delete=models.DO_NOTHING,
+                                    related_name='charge_user')
+    operator = models.ForeignKey('user_app.MyUser', verbose_name='经办人', on_delete=models.DO_NOTHING,
+                                 related_name='operator')
     datetime = models.DateField(verbose_name='购买日期')
     price = models.IntegerField(verbose_name='单价')
     count = models.IntegerField(verbose_name='购买数量')
